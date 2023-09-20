@@ -1,0 +1,51 @@
+npx create-nx-workspace@latest npm-components --preset=npm
+
+ >  NX   Let's create a new workspace [https://nx.dev/getting-started/intro]
+
+✔ Enable distributed caching to make your CI faster · Yes
+
+ >  NX   Creating your v16.8.1 workspace.
+
+   To make sure the command works reliably in all environments, and that the preset is applied 
+correctly,
+   Nx will run "npm install" several times. Please wait.
+
+✔ Installing dependencies with npm
+✔ Successfully created the workspace: npm-components.
+✔ NxCloud has been set up successfully
+
+ 
+——————————————————————————————————————————————————————————————————————————————————————————————————————
+
+
+ >  NX   Nx CLI is not installed globally.
+
+   This means that you might have to use "yarn nx" or "npx nx" to execute commands in the 
+workspace.
+   Run "yarn global add nx" or "npm install -g nx" to be able to execute command directly.
+
+
+ >  NX   Distributed caching via Nx Cloud has been enabled
+
+   In addition to the caching, Nx Cloud provides config-free distributed execution,
+   UI for viewing complex runs and GitHub integration. Learn more at https://nx.app
+   
+   Your workspace is currently unclaimed. Run details from unclaimed workspaces can be viewed on 
+cloud.nx.app by anyone
+   with the link. Claim your workspace at the following link to restrict access.
+   
+   
+https://cloud.nx.app/orgs/workspace-setup?accessToken=N2Q0YjdkM2ItN2ZjOS00Y2VkLWI0NWMtMDM3YTc0Y2FlMDA1fHJlYWQtd3JpdGU=
+
+
+ 
+——————————————————————————————————————————————————————————————————————————————————————————————————————
+
+
+ >  NX   First time using Nx? Check out this interactive Nx tutorial.
+
+   https://nx.dev/getting-started/tutorials/package-based-repo-tutorial
+
+
+
+
