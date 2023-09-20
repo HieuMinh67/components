@@ -20,5 +20,10 @@
   },
   "workspaceLayout": {
     "projectNameAndRootFormat": "as-provided"
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    }
   }
 }
