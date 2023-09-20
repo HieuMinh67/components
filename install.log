@@ -47,5 +47,27 @@ https://cloud.nx.app/orgs/workspace-setup?accessToken=N2Q0YjdkM2ItN2ZjOS00Y2VkLW
    https://nx.dev/getting-started/tutorials/package-based-repo-tutorial
 
 
+=====================
 
+Claim nx-cloud workspace
+- npx nx connect-to-nx-cloud
+
+=====================
+
+No recent branch associated runs found
+
+We didn't find any recent runs for this workspace that are 
+tied to a branch. You can click on the "Show all runs" 
+toggle to show all runs.
+
+If you want to see one quickly, you can run the following 
+command locally in your workspace.
+
+NX_BRANCH=testing npx nx run-many -t build
+
+Passing the NX_BRANCH variable lets us simulate setting a 
+branch ID in CI. Normally when you run a command locally, it 
+will not have a branch associated with it.
+
+==================
 
