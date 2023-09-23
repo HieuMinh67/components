@@ -58,8 +58,13 @@ function create_cloud_front_distribution {
     if [[ "${StateResultCount}" -gt 0 ]]; then
         printf "%s already exists \n" "cloud-front-distribution ${DistributionResourceName}"
         exit 0
-    fi    
+    fi
         
+
+                    # ,
+                    # \"S3OriginConfig\":{
+                    #     \"OriginAccessIdentity\":\"origin-access-identity/cloudfront/${OAIId}\"
+                    # }
     Distribution=$(aws cloudfront create-distribution --distribution-config "{
         \"CallerReference\":\"${ENV}-${AppName}\",
         \"DefaultRootObject\":\"index.html\",
@@ -67,10 +72,7 @@ function create_cloud_front_distribution {
             \"Quantity\":1,
             \"Items\":[{
                 \"Id\":\"myS3Origin\",
-                \"DomainName\":\"${BucketName}.s3.us-west-2.amazonaws.com\",
-                \"S3OriginConfig\":{
-                    \"OriginAccessIdentity\":\"origin-access-identity/cloudfront/${OAIId}\"
-                }
+                \"DomainName\":\"${BucketWebsiteHost}\"
             }]
         },
         \"DefaultCacheBehavior\":{

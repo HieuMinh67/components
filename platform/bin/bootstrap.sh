@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-source "$(pwd)/platform/bin/variables.sh"
+# set -eu
 
+source "$(pwd)/platform/bin/variables.sh"
 source "$(pwd)/platform/bin/functions/s3.sh"
 source "$(pwd)/platform/bin/functions/cloudfront.sh"
 
@@ -22,14 +23,24 @@ fi
 
 sleep 2
 # aws s3api create-bucket --bucket "${BucketName}" --region us-west-2 --create-bucket-configuration LocationConstraint=us-west-2 >/dev/null
-create_s3_bucket
+echo "$(create_s3_bucket)"
 
+sleep 5
+echo  "$(enable_static_website_for_s3_bucket)"
+echo "Website enabled at http://${BucketWebsiteHost}"
 sleep 3
-create_cloud_front_origin_access_identity_and_update_bucket_policy
 
-sleep 1
-printf "Create a CloudFront Distribution with the OAI \n"
-create_cloud_front_distribution    
+if [[ "${ENV}" == "prod" ]]; then
+    # echo "$(create_cloud_front_origin_access_identity_and_update_bucket_policy)"
+    echo "$(allow_public_access_to_s3_bucket)"
+    sleep 3
+    printf "Create a CloudFront Distribution with the OAI \n"
+    echo "$(create_cloud_front_distribution)"
+    sleep 10
+else
+    echo  "$(allow_whitelisted_access_to_s3_bucket)"
+fi
+
 
 BucketStateResult=$(aws dynamodb query \
     --table-name "${InfrastructureTableName}" \
@@ -43,6 +54,8 @@ if [[ "${BucketStateResultCount}" -gt 0 ]]; then
 else
     printf "error %s ++" $BucketStateResultCount
 fi
+
+
 
 # aws dynamodb delete-table --table-name infrastructure
 # aws s3 rb s3://dev-peterbeanwebsite-terraform-state-356077346614 --force

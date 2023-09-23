@@ -1,6 +1,7 @@
 import type { GatsbyConfig } from "gatsby"
 
 const config: GatsbyConfig = {
+  pathPrefix: process.env.PATH_PREFIX ?? "" ,
   siteMetadata: {
     title: `PeterBean's Profile`,
     siteUrl: `https://www.yourdomain.tld`,
