@@ -9,7 +9,7 @@ cd "${ProjectDistPath}"
 case ${ENV} in
   preview)
     echo "Deploy preview"
-    aws s3 cp ./ "s3://${BucketName}/${Branch}/" --recursive
+    aws s3 cp ./ "s3://${BucketName}/${BRANCH}/" --recursive
     ;;
   dev)
     echo "Deploy dev"

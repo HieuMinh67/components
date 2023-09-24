@@ -1,0 +1,47 @@
+name: Remove a preview
+
+on: delete
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  # https://www.codewrecks.com/post/github/choose-environment-from-branch/
+  # https://docs.github.com/en/actions/using-jobs/defining-outputs-for-jobs
+  branch:
+    name: Get branch name
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - id: branch-check
+        run: |
+          echo "Running on branch ${{ github.ref }}"
+          echo "branch=${GitHubRef:11}" >> $GITHUB_OUTPUT
+          if [ "${{ github.ref }}" == "refs/heads/master" ]; then
+            echo "github_env=development" >> $GITHUB_OUTPUT
+            echo "app_env=dev" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" =~ "^refs/heads/v[0-9]+\.[0-9]+\.[0-9]+$" ]]; then
+            echo "github_env=production" >> $GITHUB_OUTPUT
+            echo "app_env=stg" >> $GITHUB_OUTPUT
+          else
+             echo "github_env=development" >> $GITHUB_OUTPUT
+             echo "app_env=preview" >> $GITHUB_OUTPUT
+          fi
+    outputs:
+      github_env: ${{ steps.branch-check.outputs.github_env }}
+      app_env: ${{ steps.branch-check.outputs.app_env }}
+      branch: ${{ steps.branch-check.outputs.branch }}
+
+  remove-deployment:
+    needs: [ branch ]
+    runs-on: ubuntu-latest
+    environment: ${{ needs.branch.outputs.github_env }}
+    env:
+      ENV: ${{ needs.branch.outputs.app_env }}
+      BRANCH: ${{ needs.branch.outputs.branch }}
+    steps:
+    - name: Clean up
+      run: |
+        echo "Clean up for branch ${{ github.event.ref }}"
+        ./platform/bin/remove.sh  

@@ -6,12 +6,12 @@ source "$(pwd)/platform/bin/variables.sh"
  
 rm -fr ".cache"
 
-# PathPrefix=${Branch} PREFIX_PATHS=true
+# PathPrefix=${BRANCH} PREFIX_PATHS=true
 
 EnvPath="${ProjectPath}/.env.local"
 
 echo "" > "${EnvPath}"
-echo "PATH_PREFIX=${Branch}" >> "${EnvPath}"
+echo "PATH_PREFIX=${BRANCH}" >> "${EnvPath}"
 echo "PREFIX_PATHS=true" >> "${EnvPath}"
 
 npx nx build gatsby-showcase --skip-nx-cache
@@ -24,4 +24,4 @@ npx nx build gatsby-showcase --skip-nx-cache
 
 # nx build gatsby-showcase
 
-# PathPrefix=Branch PREFIX_PATHS=true gatsby build
+# PathPrefix=BRANCH PREFIX_PATHS=true gatsby build

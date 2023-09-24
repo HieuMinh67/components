@@ -7,7 +7,7 @@ source "$(pwd)/platform/bin/variables.sh"
 case ${ENV} in
   preview)
     echo "Remove a preview"
-    aws s3 rm "s3://${BucketName}/${Branch}" --recursive
+    aws s3 rm "s3://${BucketName}/${BRANCH}" --recursive
     ;;
   dev)
     echo "Removing DEV is not supported"
