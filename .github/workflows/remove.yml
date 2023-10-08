@@ -41,7 +41,11 @@ jobs:
       ENV: ${{ needs.branch.outputs.app_env }}
       BRANCH: ${{ needs.branch.outputs.branch }}
     steps:
-    - name: Clean up
-      run: |
-        echo "Clean up for branch ${{ github.event.ref }}"
-        ./platform/bin/remove.sh  
+      - name: Checkout Github repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Clean up
+        run: |
+          echo "Clean up for branch ${{ github.event.ref }}"
+          ./platform/bin/remove.sh  
